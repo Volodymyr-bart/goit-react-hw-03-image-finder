@@ -18,7 +18,7 @@ export class App extends Component {
           Open Modal
         </button>
         {showModal && (
-          <ModalWindow>
+          <ModalWindow onClose={this.toggleModal}>
             <h1>This is modal</h1>
             {/* <img src="" alt="" /> */}
             <button type="button" onClick={this.toggleModal}>
