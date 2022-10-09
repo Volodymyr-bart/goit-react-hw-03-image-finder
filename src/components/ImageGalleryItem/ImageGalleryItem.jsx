@@ -4,7 +4,6 @@ import {
 } from './ImageGalleryItem.styled';
 
 export const ImageGalleryItem = ({ item }) => {
-  console.log(item);
   const { webformatURL, tags } = item;
   // webformatURL;
   // largeImageURL;
