@@ -1,21 +1,25 @@
 import { Component } from 'react';
 import { SearchBar } from './Searchbar/Searchbar';
+// import { getGalleryItems } from '../api';
 import { ModalWindow } from './Modal/Modal';
+import { ButtonLoadMore } from './Button/Button';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
+    query: '',
+
+    status: 'idle',
     showModal: false,
   };
 
-  async componentDidMount() {
-    // async function fetchSearchQuery(query, currentPage) {
-    //   const API_KEY = `29486928-40983179e54322116410ec482`;
-    //   // axios.defaults.baseURL =
-    //   //   'https://pixabay.com/api/?key=29486928-40983179e54322116410ec482';
-    //   return await axios.get(
-    //     `https://pixabay.com/api/?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`
-    //   );
-  }
+  editQuery = data => {
+    if (data.query.trim() !== '' && this.state.query !== data.query) {
+      this.setState({
+        query: data.query,
+      });
+    }
+  };
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -23,17 +27,22 @@ export class App extends Component {
     }));
   };
   render() {
-    const { showModal } = this.state;
+    console.log(this.state);
+    const { showModal, query } = this.state;
+
     return (
       <>
-        <SearchBar />
+        <SearchBar onSubmit={this.editQuery} />
+        <ImageGallery query={query} />
+        <ButtonLoadMore />
+
+        {/*  */}
         <button type="button" onClick={this.toggleModal}>
           Open Modal
         </button>
         {showModal && (
           <ModalWindow onClose={this.toggleModal}>
             <h1>This is modal</h1>
-            {/* <img src="" alt="" /> */}
             <button type="button" onClick={this.toggleModal}>
               Close Modal
             </button>
