@@ -2,14 +2,15 @@ import { Component } from 'react';
 import { SearchBar } from './Searchbar/Searchbar';
 // import { getGalleryItems } from '../api';
 import { ModalWindow } from './Modal/Modal';
-import { ButtonLoadMore } from './Button/Button';
+// import { ButtonLoadMore } from './Button/Button';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
     query: '',
 
-    status: 'idle',
+    render: true,
+    // status: 'idle',
     showModal: false,
   };
 
@@ -27,15 +28,19 @@ export class App extends Component {
     }));
   };
   render() {
-    console.log(this.state);
-    const { showModal, query } = this.state;
+    // console.log(this.state);
+    const { showModal, query, render } = this.state;
 
     return (
       <>
         <SearchBar onSubmit={this.editQuery} />
-        <ImageGallery query={query} />
-        <ButtonLoadMore />
-
+        {render && (
+          <ImageGallery
+            query={query}
+            // currentPage={this.currentPage}
+            // gallery={this.gallery}
+          />
+        )}
         {/*  */}
         <button type="button" onClick={this.toggleModal}>
           Open Modal
