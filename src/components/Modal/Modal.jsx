@@ -6,11 +6,11 @@ const modalRoot = document.querySelector('#modal-root');
 
 export class ModalWindow extends Component {
   componentDidMount() {
-    console.log('Modal mount');
+    // console.log('Modal mount');
     window.addEventListener('keydown', this.handleKeyDown);
   }
   componentWillUnmount() {
-    console.log('Modal anmount');
+    // console.log('Modal anmount');
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 

@@ -3,13 +3,18 @@ import {
   ImageGalleryItemStyled,
 } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = ({ item }) => {
-  const { webformatURL, tags } = item;
-  // webformatURL;
-  // largeImageURL;
+export const ImageGalleryItem = ({ item, onClick }) => {
+  const { webformatURL, tags, largeImageURL } = item;
+
   return (
     <ImageGalleryItemStyled>
-      <ImageGalleryItemImageStyled src={webformatURL} alt={tags} />
+      <ImageGalleryItemImageStyled
+        src={webformatURL}
+        alt={tags}
+        onClick={() => {
+          onClick(largeImageURL, tags);
+        }}
+      />
     </ImageGalleryItemStyled>
   );
 };
