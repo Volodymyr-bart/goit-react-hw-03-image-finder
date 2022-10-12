@@ -21,7 +21,11 @@ export class ModalWindow extends Component {
   };
   render() {
     return createPortal(
-      <Overlay>
+      <Overlay
+        onClick={() => {
+          this.props.onClose();
+        }}
+      >
         <Modal>{this.props.children}</Modal>
       </Overlay>,
       modalRoot
