@@ -8,7 +8,6 @@ import { ModalWindow } from 'components/Modal/Modal';
 const INITIAL_STATE = {
   currentPage: 1,
   gallery: [],
-  render: false,
   loadMore: false,
 };
 
@@ -20,29 +19,45 @@ export class ImageGallery extends Component {
     totalPages: 0,
     showModal: false,
     imgData: null,
+    isLoading: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const API_KEY = `29486928-40983179e54322116410ec482`;
-    if (
-      prevProps.query !== this.props.query ||
-      prevState.currentPage !== this.state.currentPage
-    ) {
-      if (prevProps.query !== this.props.query) {
-        this.reset();
-        const response = await axios.get(
-          `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
-        );
-        const { hits, totalHits } = response.data;
-        const pages = Math.ceil(totalHits / this.state.perPage);
-        this.setState({ totalPages: pages, gallery: [...hits] });
-      } else {
-        const response = await axios.get(
-          `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
-        );
-        const { hits } = response.data;
-        this.setState({ gallery: [...prevState.gallery, ...hits] });
+    // this.setState({ isLoading: true });
+    try {
+      // this.setState({ isLoading: true });
+
+      if (
+        prevProps.query !== this.props.query ||
+        prevState.currentPage !== this.state.currentPage
+      ) {
+        if (prevProps.query !== this.props.query) {
+          const API_KEY = `29486928-40983179e54322116410ec482`;
+          this.reset();
+
+          const response = await axios.get(
+            `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
+          );
+          const { hits, totalHits } = response.data;
+          const pages = Math.ceil(totalHits / this.state.perPage);
+          this.setState({
+            totalPages: pages,
+            gallery: [...hits],
+          });
+        } else {
+          const API_KEY = `29486928-40983179e54322116410ec482`;
+          console.log('Povunno byte page 2 and more', this.state);
+          const response = await axios.get(
+            `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
+          );
+          const { hits } = response.data;
+          this.setState({ gallery: [...prevState.gallery, ...hits] });
+        }
       }
+      // this.setState({ isLoading: false });
+    } catch (error) {
+      console.log(error);
+    } finally {
     }
   }
 
@@ -53,6 +68,12 @@ export class ImageGallery extends Component {
   handleClickLoadMore = () => {
     this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }));
   };
+
+  // toggleLoading = () => {
+  //   this.setState(({ isLoading }) => ({
+  //     isLoading: !isLoading,
+  //   }));
+  // };
 
   toggleModal = (largeImageURL, tags) => {
     this.setState(({ showModal }) => ({
@@ -74,10 +95,6 @@ export class ImageGallery extends Component {
           {showModal && (
             <ModalWindow onClose={this.toggleModal}>
               <img alt={imgData.tags} src={imgData.largeImageURL} />
-              {/* <h1>This is modal</h1>
-              <button type="button" onClick={this.toggleModal}>
-                Close Modal
-              </button> */}
             </ModalWindow>
           )}
         </ImageGalleryStyled>
@@ -90,30 +107,24 @@ export class ImageGallery extends Component {
   }
 }
 
-// await fetch(
-//   `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=12&page=${this.state.currentPage}`
-// )
-//   .then(res => res.json())
-//   .then(res => {
-//     const { hits } = res;
-//     this.setState({ gallery: [...hits] });
-//   });
-
-//   const response = await axios
-//     .get(
-//       `https://pixabay.com/api/?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=12&page=${currentPage}`
-//     )
-//     .then(response => response.json());
-
-// await fetch(
-//   `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
-// )
-//   .then(res => res.json())
-//   .then(res => {
-//     const { hits } = res;
+// const API_KEY = `29486928-40983179e54322116410ec482`;
+// if (
+//   prevProps.query !== this.props.query ||
+//   prevState.currentPage !== this.state.currentPage
+// ) {
+//   if (prevProps.query !== this.props.query) {
+//     this.reset();
+//     const response = await axios.get(
+//       `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
+//     );
+//     const { hits, totalHits } = response.data;
+//     const pages = Math.ceil(totalHits / this.state.perPage);
+//     this.setState({ totalPages: pages, gallery: [...hits] });
+//   } else {
+//     const response = await axios.get(
+//       `https://pixabay.com/api/?key=${API_KEY}&q=${this.props.query}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.state.perPage}&page=${this.state.currentPage}`
+//     );
+//     const { hits } = response.data;
 //     this.setState({ gallery: [...prevState.gallery, ...hits] });
-//   });
-
-// console.log('pages', pages);
-// console.log('cur', this.state.currentPage);
-// console.log(this.state.currentPage < pages);
+//   }
+// }

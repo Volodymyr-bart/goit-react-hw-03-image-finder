@@ -8,10 +8,7 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 export class App extends Component {
   state = {
     query: '',
-
     render: true,
-    // status: 'idle',
-    showModal: false,
   };
 
   editQuery = data => {
@@ -22,11 +19,6 @@ export class App extends Component {
     }
   };
 
-  // toggleModal = () => {
-  //   this.setState(({ showModal }) => ({
-  //     showModal: !showModal,
-  //   }));
-  // };
   render() {
     const { query, render } = this.state;
 
@@ -34,18 +26,6 @@ export class App extends Component {
       <>
         <SearchBar onSubmit={this.editQuery} />
         {render && <ImageGallery query={query} />}
-        {/*  */}
-        <button type="button" onClick={this.toggleModal}>
-          Open Modal
-        </button>
-        {/* {showModal && (
-          <ModalWindow onClose={this.toggleModal}>
-            <h1>This is modal</h1>
-            <button type="button" onClick={this.toggleModal}>
-              Close Modal
-            </button>
-          </ModalWindow>
-        )} */}
       </>
     );
   }
