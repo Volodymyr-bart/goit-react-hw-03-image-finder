@@ -12,6 +12,9 @@ import { Component } from 'react';
 
 const INITIAL_STATE = {
   query: '',
+  currentPage: 1,
+  gallery: [],
+  render: true,
 };
 
 export class SearchBar extends Component {
