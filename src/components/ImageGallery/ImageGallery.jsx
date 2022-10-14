@@ -13,7 +13,6 @@ export const ImageGallery = ({ images, onImageClick }) => {
             largeImageURL={largeImageURL}
             onImageClick={onImageClick}
             tags={tags}
-            // onClick={() => onImageClick(largeImageURL)}
           />
         );
       })}
