@@ -1,32 +1,21 @@
-import React, { Component } from 'react';
-import { createPortal } from 'react-dom';
-import { Modal, Overlay } from './Modal.styled';
+import PropTypes from 'prop-types';
+import { Modal } from '@mui/material';
+import { Overlay, ModalImg, ModalBox } from './Modal.styled';
 
-const modalRoot = document.querySelector('#modal-root');
+export const ModalWindow = ({ onHandleClose, url, tags }) => {
+  return (
+    <Modal open={true} onClose={onHandleClose}>
+      <Overlay onClick={onHandleClose}>
+        <ModalBox>
+          <ModalImg src={url} alt={tags} />
+        </ModalBox>
+      </Overlay>
+    </Modal>
+  );
+};
 
-export class ModalWindow extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
-  render() {
-    return createPortal(
-      <Overlay
-        onClick={() => {
-          this.props.onClose();
-        }}
-      >
-        <Modal>{this.props.children}</Modal>
-      </Overlay>,
-      modalRoot
-    );
-  }
-}
+ModalWindow.propTypes = {
+  onHandleClose: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+};

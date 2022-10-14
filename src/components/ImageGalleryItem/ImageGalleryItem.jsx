@@ -1,20 +1,26 @@
-import {
-  ImageGalleryItemImageStyled,
-  ImageGalleryItemStyled,
-} from './ImageGalleryItem.styled';
+import PropTypes from 'prop-types';
+import { GalleryItemImage, GalleryItem } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = ({ item, onClick }) => {
-  const { webformatURL, tags, largeImageURL } = item;
-
+export const ImageGalleryItem = ({
+  webformatURL,
+  largeImageURL,
+  onImageClick,
+  tags,
+}) => {
   return (
-    <ImageGalleryItemStyled>
-      <ImageGalleryItemImageStyled
+    <GalleryItem>
+      <GalleryItemImage
         src={webformatURL}
         alt={tags}
-        onClick={() => {
-          onClick(largeImageURL, tags);
-        }}
+        onClick={() => onImageClick(largeImageURL, tags)}
       />
-    </ImageGalleryItemStyled>
+    </GalleryItem>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  onImageClick: PropTypes.func.isRequired,
+  tags: PropTypes.string.isRequired,
 };

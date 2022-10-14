@@ -1,12 +1,18 @@
-import { Audio } from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-
-<Audio
-  height="80"
-  width="80"
-  radius="9"
-  color="green"
-  ariaLabel="three-dots-loading"
-  wrapperStyle
-  wrapperClass
-/>;
+import { MagnifyingGlass } from 'react-loader-spinner';
+import { LoaderBox } from './Loader.styled';
+export const Loader = () => {
+  return (
+    <LoaderBox>
+      <MagnifyingGlass
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="MagnifyingGlass-loading"
+        wrapperStyle={{}}
+        wrapperClass="MagnifyingGlass-wrapper"
+        glassColor="#c0efff"
+        color="#e15b64"
+      />
+    </LoaderBox>
+  );
+};
